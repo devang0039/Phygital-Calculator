@@ -30,26 +30,25 @@ def calculator_tile(title, url, emoji=""):
     """
     st.markdown(tile_html, unsafe_allow_html=True)
 
+# --- Styles ---
+css = """
+<style>
+body, .stApp {
+  font-family: Inter, Roboto, Arial, sans-serif;
+  background: #f9fafc;
+  color: #0f1724;
+}
 
-# --- Styles (mimicking your shared page’s structure) ---
-st.markdown(
-    """
-    <style>
-    body, .stApp {
-      font-family: Inter, Roboto, Arial, sans-serif;
-      background: #f9fafc;
-      color: #0f1724;
-    }
-
-    .page-header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    .page-header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin: 0;
-    }
-    .page-header .subhead {
-      font-size: 14px;
-      color: #555;
+.page-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+.page-header .subhead {
+  font-size: 14px;
+  color: #555;
+  mar
