@@ -78,3 +78,21 @@ st.markdown("<div class='tile-grid'>", unsafe_allow_html=True)
 calculator_tile("SSIP", SSIP, "💰")
 calculator_tile("SRP", SRP, "📝")
 st.markdown("</div>", unsafe_allow_html=True)
+
+# --- Hide Streamlit default UI elements (top bar, menu, footer) ---
+st.markdown(
+    """
+    <style>
+    /* Hide the entire top header (with 3 dots menu) */
+    header {visibility: hidden;}
+
+    /* Hide the three-dots menu if header still renders */
+    #MainMenu {visibility: hidden;}
+
+    /* Hide the Streamlit footer */
+    footer {visibility: hidden;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
