@@ -1,0 +1,128 @@
+import streamlit as st
+
+st.set_page_config(page_title="Agent Calculators", layout="wide")
+
+# --- Header ---
+st.title("Agent Tools — Calculator Hub")
+st.subheader("Quick access to common external calculators. Content is generic; links open in a new tab.")
+st.markdown("---")
+
+# Helper to render a tile
+def calculator_tile(title, description, url, badge=None):
+    tile_html = f"""
+    <div class="tile" role="group" aria-label="{title}">
+      <div class="tile-inner">
+        <h3>{title}</h3>
+        <p class="desc">{description}</p>
+        <div class="actions">
+          <a href="{url}" target="_blank" rel="noopener noreferrer" class="btn">Open calculator</a>
+          {f'<span class="badge">{badge}</span>' if badge else ''}
+        </div>
+      </div>
+    </div>
+    """
+    st.markdown(tile_html, unsafe_allow_html=True)
+
+# Inline CSS for tiles
+st.markdown(
+    """
+    <style>
+    .tile{background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-radius:12px; padding:16px; box-shadow: 0 6px 18px rgba(20,20,30,0.06); margin:8px 0}
+    .tile-inner h3{margin:0 0 6px 0; font-size:18px}
+    .tile-inner .desc{margin:0 0 12px 0; color:#394149; font-size:14px}
+    .btn{display:inline-block; padding:8px 12px; border-radius:8px; background:#0f62fe; color:white; text-decoration:none; font-weight:600}
+    .badge{margin-left:12px; background:#e6f0ff; color:#0f62fe; padding:6px 8px; border-radius:999px; font-size:12px}
+    .section-title{font-size:20px; margin:0 0 12px 0}
+    .tile-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:12px}
+    @media (max-width: 600px) {
+        .tile-grid{grid-template-columns: 1fr}
+    }
+    </style>
+    """ ,
+    unsafe_allow_html=True,
+)
+
+# External links
+HOME_ELIGIBILITY = "https://www.bajajhousingfinance.in/calculators/home-loan-eligibility-calculator"
+HOME_EMI = "https://www.bajajhousingfinance.in/calculators/home-loan-emi-calculator"
+HOME_BALANCE_TRANSFER = "https://www.bajajhousingfinance.in/calculators/home-loan-balance-transfer-calculator"
+
+SSIP = "https://www.tataaia.com/calculator/compound-interest-calculator.html"
+SRP = "https://www.tataaia.com/calculator/term-insurance-calculator.html"
+
+# Search / filter input
+query = st.text_input("Filter calculators (type to search titles or descriptions)", value="").strip().lower()
+
+def matches(q, text):
+    return q in text.lower()
+
+# --- Product Sections ---
+st.markdown("## 🏠 Home Loan")
+st.markdown("<div class='tile-grid'>", unsafe_allow_html=True)
+
+items = [
+    {
+        "title": "Eligibility calculator",
+        "description": "Estimate if a customer qualifies for a home loan based on income, obligations and tenure.",
+        "url": HOME_ELIGIBILITY,
+        "badge": "Bajaj Housing",
+    },
+    {
+        "title": "EMI Calculator",
+        "description": "Compute monthly EMI for loan amount, tenure and interest rate.",
+        "url": HOME_EMI,
+        "badge": "Bajaj Housing",
+    },
+    {
+        "title": "Home Loan Balance Transfer",
+        "description": "Compare savings by transferring your home loan to another lender.",
+        "url": HOME_BALANCE_TRANSFER,
+        "badge": "Bajaj Housing",
+    },
+]
+
+for it in items:
+    if not query or matches(query, it['title']) or matches(query, it['description']):
+        calculator_tile(it['title'], it['description'], it['url'], badge=it['badge'])
+
+st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("---")
+
+st.markdown("## 🛡️ Insurance")
+st.markdown("<div class='tile-grid'>", unsafe_allow_html=True)
+
+ins_items = [
+    {
+        "title": "SSIP (Compound interest)",
+        "description": "Estimate returns under a compounding savings plan.",
+        "url": SSIP,
+        "badge": "Tata AIA",
+    },
+    {
+        "title": "SRP (Term Insurance Premium)",
+        "description": "Estimate term insurance premium for cover, age and policy term.",
+        "url": SRP,
+        "badge": "Tata AIA",
+    },
+]
+
+for it in ins_items:
+    if not query or matches(query, it['title']) or matches(query, it['description']):
+        calculator_tile(it['title'], it['description'], it['url'], badge=it['badge'])
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+# Footer / Notes
+st.markdown("---")
+st.info(
+    "These links open external calculators. Content here is generic and provided for agent convenience — verify results on the provider site before advising customers."
+)
+
+with st.expander("How to use these calculators"):
+    st.write("""
+    - Click any tile to open the external calculator in a new tab.
+    - Use the filter box to quickly find a calculator by name or purpose.
+    - This page is generic and is meant to help agents provide quick guidance. Always confirm final figures on the provider's site.
+    """)
+
+# End of file
